@@ -11,6 +11,9 @@ import {
   Image,
   ImageBackground,
 } from 'react-native';
+import MashButton from './CustomButton';
+import Header from './Header';
+
 function TodoList() {
   const [name, SetName] = useState('');
   const [submitted, SetSubmitted] = useState(false);
@@ -29,6 +32,7 @@ function TodoList() {
       source={{
         uri: 'https://cdn.pixabay.com/photo/2013/07/12/12/35/texture-145968_960_720.png',
       }}>
+      <Header />
       <Modal
         visible={showWarning}
         transparent
@@ -60,16 +64,30 @@ function TodoList() {
         placeholder="e.g. John"
         onChangeText={value => SetName(value)}
       />
-      <Pressable
-        onPress={onPressHandler}
-        hitSlop={{top: 10, bottom: 10, right: 10, left: 10}}
-        android_ripple={{color: '#00f'}}
-        style={({pressed}) => [
-          {backgroundColor: pressed ? '#dddddd' : '#00ff00'},
-          styles.button,
-        ]}>
-        <Text style={styles.text}>{submitted ? 'Clear' : 'Submit'}</Text>
-      </Pressable>
+      <MashButton
+        onPressFunction={onPressHandler}
+        title={submitted ? 'Clear' : 'Submit'}
+        color={'#00ff00'}
+      />
+      <MashButton
+        onPressFunction={() => {}}
+        title={'Test'}
+        color={'#ff00ff'}
+        style={{margin: 10}}
+      />
+      {/* <Pressable
+          onPress={onPressHandler}
+          hitSlop={{ top: 10, bottom: 10, right: 10, left: 10 }}
+          android_ripple={{ color: '#00f' }}
+          style={({ pressed }) => [
+            { backgroundColor: pressed ? '#dddddd' : '#00ff00' },
+            styles.button
+          ]}
+        >
+          <Text style={styles.text}>
+            {submitted ? 'Clear' : 'Submit'}
+          </Text>
+        </Pressable> */}
       {submitted ? (
         <View style={styles.body}>
           <Text style={styles.text}>You are registered as {name}</Text>
@@ -155,4 +173,5 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 });
+
 export default TodoList;
