@@ -4,7 +4,6 @@
 
 ```
 npx react-native run-android
-npx react-native link
 ```
 
 - install pkg
@@ -23,6 +22,7 @@ react-native-reanimated
 react-native-safe-area-context
 react-native-screens
 react-native-vector-icon
+@react-native-async-storage/async-storage
 ```
 
 - edit file to import icon pkg
