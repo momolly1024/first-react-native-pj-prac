@@ -1,10 +1,28 @@
 ### step
 
+- run
+
+```
+npx react-native run-android
+npx react-native link
+```
+
 - install pkg
 
 ```
-react-native-vector-icons
+@react-navigation/bottom-tabs
+@react-navigation/drawer
+@react-navigation/material-bottom-tabs
+@react-navigation/material-top-tabs
+@react-navigation/native
+@react-navigation/stack
+react-native-gesture-handler
+react-native-pager-view
 react-native-paper
+react-native-reanimated
+react-native-safe-area-context
+react-native-screens
+react-native-vector-icon
 ```
 
 - edit file to import icon pkg

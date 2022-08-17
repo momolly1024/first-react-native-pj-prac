@@ -1,17 +1,17 @@
 import React from 'react';
+import {StyleSheet, View, Text, Pressable} from 'react-native';
+
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import ScreenA from './ScreenA';
-import ScreenB from './ScreenB';
+import ScreenA from './screens/ScreenA';
+import ScreenB from './screens/ScreenB';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {Text} from 'react-native';
 
 // const Tab = createBottomTabNavigator();
 // const Tab = createMaterialBottomTabNavigator();
 const Tab = createMaterialTopTabNavigator();
-
 function TodoList() {
   return (
     <NavigationContainer>
@@ -30,8 +30,6 @@ function TodoList() {
             }
             return <FontAwesome5 name={iconName} size={size} color={color} />;
           },
-        })}
-        tabBarOptions={{
           activeTintColor: '#f0f',
           inactiveTintColor: '#555',
           activeBackgroundColor: '#fff',
@@ -39,7 +37,7 @@ function TodoList() {
           showLabel: true,
           labelStyle: {fontSize: 14},
           showIcon: true,
-        }}
+        })}
         activeColor="#f0edf6"
         inactiveColor="#3e2465"
         barStyle={{backgroundColor: '#694fad'}}>
