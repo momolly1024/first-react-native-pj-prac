@@ -1,3 +1,10 @@
+### reference
+
+- https://www.youtube.com/watch?v=ANdSdIlgsEw&ab_channel=ProgrammingwithMash
+- https://github.com/mahdi-sharifimehr/RN-Tutorial-Main/tree/RN-Tutorial-24
+- https://github.com/mahdi-sharifimehr/RN-Tutorial-Main
+
+
 ### step
 
 - run
