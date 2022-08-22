@@ -1,3 +1,6 @@
+
+
+
 ### reference
 
 - https://www.youtube.com/watch?v=ANdSdIlgsEw&ab_channel=ProgrammingwithMash
@@ -14,6 +17,11 @@ npx react-native run-android
 ```
 
 - install pkg
+
+- fix
+```
+npx react-native log-android
+```
 
 ```
 @react-navigation/bottom-tabs

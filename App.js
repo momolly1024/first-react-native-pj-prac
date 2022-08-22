@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import type {Node} from 'react';
 import {
   SafeAreaView,
@@ -37,6 +37,10 @@ import {
 import {BottomNavigation, Button, TextInput, Card} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import TodoList from './src/TodoList';
+// import MqttFunc from './src/Mqtt/MqttFunc';
+import Mqtt from './src/Mqtt/Mqtt';
+import MqttProvider from './src/Mqtt/MqttProvider';
+import MqttContext from './src/Mqtt/MqttContext';
 const Section = ({children, title}): Node => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
@@ -144,40 +148,15 @@ const LotsOfGreetings = () => {
 };
 
 const AlbumsRoute = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  //   const storedEvents = useContext(MqttContext);
+  //   console.log(storedEvents);
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
+    <Text style={styles.highlight}>MqttProvider Component</Text>
 
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    // <MqttProvider>
+    //   <Text style={styles.highlight}>{storedEvents}</Text>;
+    //   <Text style={styles.highlight}>MqttProvider Component</Text>;
+    // </MqttProvider>
   );
 };
 
@@ -293,18 +272,21 @@ const MyComponent = () => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'music', title: 'Music', icon: 'gift'},
-    {key: 'albums', title: 'Albums', icon: 'lock'},
     {key: 'recents', title: 'Recents', icon: 'history'},
     {key: 'github', title: 'Github', icon: 'github'},
     {key: 'todo', title: 'TodoList', icon: 'github'},
+    {key: 'mqtt', title: 'MQTT', icon: 'lock'},
+    {key: 'albums', title: 'Albums', icon: 'lock'},
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
     music: MusicRoute,
-    albums: AlbumsRoute,
     recents: RecentsRoute,
     github: TestRoute,
     todo: TodoList,
+    // mqtt: MqttFunc,
+    mqtt: Mqtt,
+    albums: AlbumsRoute,
   });
 
   return (
