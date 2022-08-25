@@ -1,12 +1,12 @@
-
-
+![](https://i.imgur.com/I1dLXbW.png)
+![](https://i.imgur.com/89Im2YH.png)
+![](https://i.imgur.com/qAkuyVK.png)
 
 ### reference
 
 - https://www.youtube.com/watch?v=ANdSdIlgsEw&ab_channel=ProgrammingwithMash
 - https://github.com/mahdi-sharifimehr/RN-Tutorial-Main/tree/RN-Tutorial-24
 - https://github.com/mahdi-sharifimehr/RN-Tutorial-Main
-
 
 ### step
 
@@ -19,6 +19,7 @@ npx react-native run-android
 - install pkg
 
 - fix
+
 ```
 npx react-native log-android
 ```

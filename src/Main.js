@@ -5,7 +5,7 @@ import Home from './screens/Home';
 import Login from './screens/Login';
 
 const Stack = createStackNavigator();
-function TodoList() {
+function Main() {
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -34,4 +34,4 @@ function TodoList() {
   );
 }
 
-export default TodoList;
+export default Main;

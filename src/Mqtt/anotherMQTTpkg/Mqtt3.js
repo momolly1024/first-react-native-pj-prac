@@ -4,7 +4,8 @@ import mqtt from '@taoqf/react-native-mqtt';
 
 const client = mqtt.connect('mqtt://test.mosquitto.org');
 
-function Mqtt() {
+function Mqtt3() {
+  const [data, setData] = useState();
   useEffect(() => {
     client.on('connect', function () {
       client.subscribe('presence', function (err) {
@@ -17,15 +18,16 @@ function Mqtt() {
     client.on('message', function (topic, message) {
       // message is Buffer
       console.log(message.toString());
+      setData(message);
       client.end();
     });
   }, []);
 
   return (
     <View>
-      <Text>s</Text>
+      <Text>{data}</Text>
     </View>
   );
 }
 
-export default Mqtt;
+export default Mqtt3;

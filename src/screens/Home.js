@@ -1,6 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, Alert, TextInput} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Alert,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
 import CustomButton from '../utils/CustomButton';
 import GlobalStyle from '../utils/GlobalStyle';
 
@@ -54,10 +62,7 @@ export default function Home({navigation, route}) {
   return (
     <View style={styles.body}>
       <Text style={[GlobalStyle.CustomFont, styles.text]}>
-        Welcome {name} !
-      </Text>
-      <Text style={[GlobalStyle.CustomFont, styles.text]}>
-        Your age is {age}
+        Welcome {name} {age}!
       </Text>
       <TextInput
         style={styles.input}
@@ -67,25 +72,48 @@ export default function Home({navigation, route}) {
       />
       <CustomButton
         title="Update"
-        color="#ff7f00"
+        color="#bbbbbb"
         onPressFunction={updateData}
       />
       <CustomButton
         title="Remove"
-        color="#f40100"
+        color="#aaaaaa"
         onPressFunction={removeData}
+      />
+      <FlatList
+        data={[
+          {country: 'beitou', city: 'taipei'},
+          {country: 'ilan', city: 'ilan'},
+          {country: 'www', city: 'www'},
+          {country: 'beitou', city: 'taipei'},
+        ]}
+        renderItem={({item, index}) => (
+          <TouchableOpacity
+            onPress={() => {
+              //   navigation.navigate('Map', {
+              //     city: item.city,
+              //     lat: item.lat,
+              //     lng: item.lng,
+              //   });
+            }}>
+            <View style={styles.item}>
+              <Text style={styles.title}>{item.country}</Text>
+              <Text style={styles.subtitle}>{item.city}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item, index) => index.toString()}
       />
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   body: {
     flex: 1,
     alignItems: 'center',
   },
   text: {
-    fontSize: 40,
+    fontSize: 20,
     margin: 10,
   },
   input: {
@@ -96,7 +124,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     textAlign: 'center',
     fontSize: 20,
-    marginTop: 130,
+    marginTop: 10,
     marginBottom: 10,
+  },
+  item: {
+    backgroundColor: '#ffffff',
+    borderWidth: 2,
+    borderColor: '#cccccc',
+    borderRadius: 5,
+    margin: 7,
+    width: 350,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 30,
+    margin: 10,
+  },
+  subtitle: {
+    fontSize: 20,
+    margin: 10,
+    color: '#999999',
   },
 });

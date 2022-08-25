@@ -12,6 +12,7 @@ import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {Input, Button} from '@rneui/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import init from 'react_native_mqtt';
+import styles from '../css/styles';
 
 init({
   size: 10000,
@@ -36,7 +37,8 @@ class Mqtt extends Component {
     super(props);
     this.state = {
       //   topic: 'testTopic',
-      topic: 'event/#',
+      //   topic: 'event/#',
+      topic: 'event/dp-01/cu-01/bid-04/#',
       subscribedTopic: '',
       message: '',
       messageList: [],
@@ -237,9 +239,16 @@ class Mqtt extends Component {
         )}
         {this.state.status === 'connected' ? (
           <View style={styles.messageBox}>
-            <FlatList
+            {/* <FlatList
               ref={ref => (this.MessageListRef = ref)}
               data={messageList}
+              renderItem={this.renderRow}
+              keyExtractor={this._keyExtractor}
+              extraData={this.state}
+            /> */}
+            <SubComp
+              data={messageList}
+              refMLR={ref => (this.MessageListRef = ref)}
               renderItem={this.renderRow}
               keyExtractor={this._keyExtractor}
               extraData={this.state}
@@ -252,44 +261,19 @@ class Mqtt extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 70,
-  },
-  messageBox: {
-    margin: 16,
-    flex: 1,
-    height: 120,
-  },
-  myMessageComponent: {
-    backgroundColor: '#000000',
-    borderRadius: 3,
-    padding: 5,
-    marginBottom: 5,
-  },
-  messageComponent: {
-    marginBottom: 5,
-    backgroundColor: '#0075e2',
-    padding: 5,
-    borderRadius: 3,
-  },
-  introMessage: {},
-  textInput: {
-    height: 40,
-    margin: 5,
-    borderWidth: 1,
-    padding: 5,
-  },
-  textIntro: {
-    color: 'black',
-    fontSize: 12,
-  },
-  textMessage: {
-    color: 'white',
-    fontSize: 16,
-  },
-});
+const SubComp = props => {
+  const {data, refMLR, renderItem, keyExtractor, extraData} = props;
+  return (
+    <View style={styles.messageBox}>
+      <FlatList
+        ref={refMLR}
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        extraData={extraData}
+      />
+    </View>
+  );
+};
 
 export default Mqtt;
