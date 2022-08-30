@@ -11,6 +11,7 @@ import {Alert, StyleSheet, Text, View} from 'react-native';
 
 import messaging from '@react-native-firebase/messaging';
 import styles from '../css/styles';
+// import {useNavigation} from '@react-navigation/native';
 
 let fcmUnsubscribe = null;
 
@@ -46,6 +47,16 @@ function Notify(props) {
         console.log('messaging.requestPermission Error: ', err);
       });
   }, []);
+  //   const navigation = useNavigation();
+  //   useEffect(() => {
+  //     const unsubscribe = messaging().onMessage(async remoteMessage => {
+  //       Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+  //       if (remoteMessage?.data?.screen_name) {
+  //         navigation.navigate(remoteMessage?.data?.screen_name);
+  //       }
+  //     });
+  //     return unsubscribe;
+  //   }, []);
   return (
     <View style={styles.sectionContainer}>
       <Text style={styles.highlight}>{props.test}</Text>

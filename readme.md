@@ -55,7 +55,7 @@ icon docs
 ### fetch API
 
 ```
-const MusicRoute = () => {
+const FetchData = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   console.log(data);
