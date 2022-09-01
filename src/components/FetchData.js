@@ -1,6 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, Text, View, FlatList} from 'react-native';
+import {SafeAreaView, Text, View, FlatList, Alert} from 'react-native';
 import styles from '../css/styles';
+import messaging from '@react-native-firebase/messaging';
+import {useNavigation} from '@react-navigation/native';
+
+let fcmUnsubscribe = null;
 
 const getHeader = title => {
   return (
@@ -34,10 +38,10 @@ const getFooter = loading => {
   );
 };
 
-const FetchData = () => {
+const FetchData = props => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-  console.log(data);
+  //   console.log(data);
 
   useEffect(() => {
     fetch(
@@ -48,6 +52,9 @@ const FetchData = () => {
       .catch(error => console.error(error))
       .finally(() => setLoading(false));
   }, []);
+
+  //   const navigation = useNavigation();
+
   return (
     <SafeAreaView style={styles.container}>
       {isLoading ? (
