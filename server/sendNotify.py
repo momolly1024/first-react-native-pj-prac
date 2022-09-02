@@ -18,6 +18,7 @@ messages = [
             "screen_name": "RRRR",
             "title": "great match!",
             "body": "PortugalVSDenmark",
+            "test": "user|page-to-open|part-of-page-where-to-position|other-custom-data-needed",
         },
         token=registration_token,
     ),

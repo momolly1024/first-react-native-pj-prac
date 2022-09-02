@@ -19,10 +19,10 @@ import TodoList from './src/todoList/TodoList';
 import {useNavigation} from '@react-navigation/native';
 import {Alert} from 'react-native';
 import CardItems from './src/components/CardItems';
-
+import messaging from '@react-native-firebase/messaging';
+let fcmUnsubscribe = null;
 const App: () => Node = () => {
   const [index, setIndex] = useState(0);
-  const [testPassProps, setTestPassProps] = useState('HELLO ~~~');
   const [routes] = useState([
     {key: 'notify', title: 'CardItems', icon: 'lock'},
     {key: 'FetchData', title: 'FetchData', icon: 'gift'},
@@ -32,12 +32,10 @@ const App: () => Node = () => {
     {key: 'mqtt', title: 'MQTT', icon: 'lock'},
     {key: 'todoList', title: 'todoList', icon: 'map'},
   ]);
-  useEffect(() => {
-    setTestPassProps('SOMETHING...');
-  }, []);
 
+  const [cardPage, setCardPAge] = useState('');
   const renderScene = BottomNavigation.SceneMap({
-    notify: () => <CardItems setIndex={setIndex} />,
+    notify: () => <CardItems cardPage={cardPage} />,
     FetchData: () => <FetchData setIndex={setIndex} />,
     // recents: RecentsRoute,
     // TestRoute: TestRoute,
@@ -47,8 +45,85 @@ const App: () => Node = () => {
     todoList: TodoList,
   });
 
-  //   const navigation = useNavigation();
+  useEffect(() => {
+    messaging()
+      .requestPermission()
+      .then(authStatus => {
+        console.log('APNs Status: ', authStatus);
+        if (
+          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+          authStatus === messaging.AuthorizationStatus.PROVISIONAL
+        ) {
+          messaging()
+            .getToken()
+            .then(token => {
+              console.log('messaging.getToken: ', token);
+            });
+          messaging().onTokenRefresh(token => {
+            console.log('messaging.onTokenRefresh: ', token);
+          });
+          fcmUnsubscribe = messaging().onMessage(async remoteMessage => {
+            console.log('在開啟app時候的通知 ', remoteMessage);
+            Alert.alert(
+              'HELLO~~ ',
+              `通知----- ${remoteMessage.data.screen_name}`,
+              [{text: 'OK', onPress: () => setIndex(0)}],
+              {cancelable: false},
+            );
+          });
+        }
+      })
+      .catch(err => {
+        console.log('messaging.requestPermission Error: ', err);
+        throw err;
+      });
+  }, []);
+  const changePage = msg => {
+    setIndex(0);
+    setCardPAge(msg.data.screen_name);
+  };
+  useEffect(() => {
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      Alert.alert(
+        'Confirm',
+        `this is just a ${remoteMessage.data.screen_name}`,
+        [
+          // {
+          //   text: 'Cancel',
+          //   onPress: () => console.log('Cancel Pressed'),
+          //   style: 'cancel',
+          // },
+          {text: 'OK', onPress: () => changePage(remoteMessage)},
+          ,
+        ],
+        {cancelable: false},
+      );
+      console.log(
+        'app在背景執行時的通知-----',
+        remoteMessage.data.screen_name,
+        // remoteMessage.notification,
+      );
+    });
 
+    // Check whether an initial notification is available
+    messaging()
+      .getInitialNotification()
+      .then(remoteMessage => {
+        if (remoteMessage) {
+          console.log(
+            'app關閉時的通知-----',
+            remoteMessage.data.screen_name,
+            // remoteMessage.notification,
+          );
+          Alert.alert(
+            'Confirm',
+            `this is just a ${remoteMessage.data.screen_name}`,
+            [{text: 'OK', onPress: () => changePage(remoteMessage)}, ,],
+            {cancelable: false},
+          );
+        }
+      });
+  }, []);
   return (
     <BottomNavigation
       navigationState={{index, routes}}

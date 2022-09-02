@@ -10,58 +10,18 @@ import {
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
-import messaging from '@react-native-firebase/messaging';
-let fcmUnsubscribe = null;
+
 const TestComp = props => {
   const navigation = useNavigation();
-  //   console.log(props);
-  const {hello, setIndex} = props;
-  //   const changePage = i => {
-  //     setIndex(i);
-  //   };
+  const {hello, cardPage} = props;
+
   useEffect(() => {
-    messaging()
-      .requestPermission()
-      .then(authStatus => {
-        console.log('APNs Status: ', authStatus);
-        if (
-          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-          authStatus === messaging.AuthorizationStatus.PROVISIONAL
-        ) {
-          messaging()
-            .getToken()
-            .then(token => {
-              console.log('messaging.getToken: ', token);
-            });
-          messaging().onTokenRefresh(token => {
-            console.log('messaging.onTokenRefresh: ', token);
-          });
-          fcmUnsubscribe = messaging().onMessage(async remoteMessage => {
-            console.log('A new message just arrived. ', remoteMessage);
-            Alert.alert(
-              'A new FCM message arrived!',
-              JSON.stringify(remoteMessage.data.screen_name),
-              [
-                {
-                  text: 'OK',
-                  onPress: navigation.navigate(remoteMessage.data.screen_name),
-                },
-              ],
-              {cancelable: false},
-            );
-            // changePage(2);
-            navigation.navigate(remoteMessage.data.screen_name);
-          });
-          messaging().setBackgroundMessageHandler(async remoteMessage => {
-            console.log('Message handled in the background!', remoteMessage);
-          });
-        }
-      })
-      .catch(err => {
-        console.log('messaging.requestPermission Error: ', err);
-        throw err;
-      });
-  }, []);
+    if (cardPage) {
+      navigation.navigate(cardPage);
+      console.log('TestComp-----', cardPage);
+    }
+  }, [cardPage]);
+
   return (
     <View style={styles.TestComp}>
       <TouchableOpacity onPress={() => navigation.navigate(hello)}>
@@ -93,7 +53,10 @@ const data = [
   {name: 'ssss', id: '6'},
   {name: 'dddd', id: '7'},
 ];
-function SettingsScreen({navigation}) {
+function SettingsScreen(props) {
+  const navigation = useNavigation();
+  const {cardPage} = props;
+
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text>Settings Screen</Text>
@@ -111,7 +74,7 @@ function SettingsScreen({navigation}) {
           //   padding: 20,
         }}>
         {data.map(r => (
-          <TestComp hello={r.name} key={r.id} />
+          <TestComp hello={r.name} key={r.id} cardPage={cardPage} />
         ))}
       </View>
     </View>
@@ -132,7 +95,7 @@ function ProfileScreen({navigation}) {
 const SettingsStack = createNativeStackNavigator();
 
 function CardItems(props) {
-  const {setIndex} = props;
+  const {cardPage} = props;
 
   return (
     <NavigationContainer>
@@ -141,7 +104,7 @@ function CardItems(props) {
           {() => (
             <SettingsStack.Navigator>
               <SettingsStack.Screen name="Settings">
-                {props => <SettingsScreen {...props} setIndex={setIndex} />}
+                {props => <SettingsScreen {...props} cardPage={cardPage} />}
               </SettingsStack.Screen>
 
               <SettingsStack.Screen name="Profile" component={ProfileScreen} />
