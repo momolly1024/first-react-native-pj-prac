@@ -1,12 +1,48 @@
+## notification
+
+https://blog.openreplay.com/mobile-push-notifications-with-firebase
+
+- app 背景執行時/關閉 app 時 /開啟 app 時
+
+python(要先取得 APP 的 registration_token 傳給後端，後端再發送?maybe~~)
+
+```py
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import messaging
+import datetime
+
+cred = credentials.Certificate("./serviceAccountKey.json")
+default_app = firebase_admin.initialize_app(credential=cred)
+registration_token = ""
+
+messages = [
+    messaging.Message(
+        notification=messaging.Notification(
+            title="qqqqqqqqq",
+            body="wwwwwwwwwww",
+        ),
+        data={
+            "screen_name": "RRRR",
+            "title": "great match!",
+            "body": "PortugalVSDenmark",
+        },
+        token=registration_token,
+    ),
+]
+
+response = messaging.send_all(messages)
+print("{0} messages were sent successfully".format(response.success_count))
+
+```
+
+#### q
+
 ![](https://i.imgur.com/I1dLXbW.png)
 ![](https://i.imgur.com/89Im2YH.png)
 ![](https://i.imgur.com/qAkuyVK.png)
 
 ### reference
-
-- https://www.youtube.com/watch?v=ANdSdIlgsEw&ab_channel=ProgrammingwithMash
-- https://github.com/mahdi-sharifimehr/RN-Tutorial-Main/tree/RN-Tutorial-24
-- https://github.com/mahdi-sharifimehr/RN-Tutorial-Main
 
 ### step
 

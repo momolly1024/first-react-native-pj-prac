@@ -67,9 +67,12 @@ const App: () => Node = () => {
             Alert.alert(
               'HELLO~~ ',
               `通知----- ${remoteMessage.data.screen_name}`,
-              [{text: 'OK', onPress: () => setIndex(0)}],
+              [{text: 'OK', onPress: () => changePage(remoteMessage)}],
               {cancelable: false},
             );
+          });
+          messaging().setBackgroundMessageHandler(async remoteMessage => {
+            console.log('Message handled in the background!', remoteMessage);
           });
         }
       })
@@ -118,7 +121,7 @@ const App: () => Node = () => {
           Alert.alert(
             'Confirm',
             `this is just a ${remoteMessage.data.screen_name}`,
-            [{text: 'OK', onPress: () => changePage(remoteMessage)}, ,],
+            [{text: 'OK', onPress: () => changePage(remoteMessage)}],
             {cancelable: false},
           );
         }

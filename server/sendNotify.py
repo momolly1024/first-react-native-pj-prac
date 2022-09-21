@@ -5,14 +5,17 @@ import datetime
 
 cred = credentials.Certificate("./serviceAccountKey.json")
 default_app = firebase_admin.initialize_app(credential=cred)
-registration_token = "dO5ZbBIAQr6IMvgwN5QriG:APA91bHqrxWDOYzssHM21FAAErHJbAtWzbvvtZ68263XJIqZVPXRDQZ2y3Tm50eOv86oMtySlBENNQr3OGcqgCwTpvCMPZ4xO7Av3zQC9-Q4JlQAur6-aVD9gqHdGARGVaZTO-T8aHO_"
+registration_token = "fuQ0LlBOTfakDxOnzN4SdD:APA91bFx2fjokXC7vfIpu_UmuzCA3myY05VgRiZQxErrgHAxx8C977PaYpffmY1fPHCvOiz4pKVyrd5_AggKeYqt66IzysOoCbGZ-lfoKTUXtb368Duec3ZNWTe2zTPQrDdluCfNPwrC"
 
+# cred = credentials.Certificate("./serviceAccountKey.json")
+# registration_token ="dm7Z9bjLRH6L07lv9rF-jo:APA91bEiCEZQIt2oZxXX7fpv9_7FLbPuKjGFCWQUv-wUNwZ1dqEzskagq8zmW-FKPyHBUvnn8o3kb57vYuS_pjRjHsf4FDjCUxwn_OlsEncrL5OQT4LLnNpInDdojwOZVH6Jn12OaD3a"
 messages = [
     messaging.Message(
         # data={"screen_name": "RRRR", "title": "great match!", "body": "PortugalVSDenmark"},
         notification=messaging.Notification(
             title="qqqqqqqqq",
             body="wwwwwwwwwww",
+            image="https://cdn-icons-png.flaticon.com/512/7246/7246727.png",
         ),
         data={
             "screen_name": "RRRR",
