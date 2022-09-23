@@ -33,7 +33,7 @@ const App: () => Node = () => {
     {key: 'todoList', title: 'todoList', icon: 'map'},
   ]);
 
-  const [cardPage, setCardPAge] = useState('');
+  const [cardPage, setCardPage] = useState('');
   const renderScene = BottomNavigation.SceneMap({
     notify: () => <CardItems cardPage={cardPage} />,
     FetchData: () => <FetchData setIndex={setIndex} />,
@@ -83,7 +83,7 @@ const App: () => Node = () => {
   }, []);
   const changePage = msg => {
     setIndex(0);
-    setCardPAge(msg.data.screen_name);
+    setCardPage(msg.data.screen_name);
   };
   useEffect(() => {
     messaging().onNotificationOpenedApp(remoteMessage => {
